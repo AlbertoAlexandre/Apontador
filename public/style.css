@@ -1,0 +1,646 @@
+/* Estilos personalizados para o APONTADOR */
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 500;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 12px 20px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    font-size: 16px; /* Melhor para mobile */
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+.table {
+    font-size: 14px;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.viagem-item {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-left: 4px solid #007bff;
+}
+
+.viagem-item small {
+    color: #6c757d;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .card {
+        margin-bottom: 20px;
+    }
+    
+    .btn-lg {
+        padding: 15px 20px;
+        font-size: 18px;
+    }
+    
+    .form-control, .form-select {
+        font-size: 16px;
+        padding: 15px;
+    }
+    
+    .table-responsive {
+        font-size: 12px;
+    }
+    
+    .navbar-nav {
+        text-align: center;
+    }
+    
+    .nav-link {
+        padding: 10px 15px !important;
+    }
+}
+
+/* Animações */
+.section {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.btn {
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* Indicadores visuais */
+.alert-custom {
+    border-radius: 8px;
+    border: none;
+    font-weight: 500;
+}
+
+.badge-custom {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* Melhorias para toque em dispositivos móveis */
+.btn, .form-control, .form-select {
+    min-height: 44px; /* Tamanho mínimo recomendado para toque */
+}
+
+/* Botões pequenos para ações */
+.btn-sm {
+    min-height: 32px;
+}
+
+/* Estilo para campos obrigatórios */
+.form-label::after {
+    content: " *";
+    color: #dc3545;
+}
+
+/* Estilos para badges de seleção */
+.badge {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    margin: 2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge .btn-close {
+    font-size: 0.7rem;
+    padding: 0;
+    margin-left: 5px;
+}
+
+/* Container para itens selecionados */
+#servicosSelecionados,
+#locaisSelecionados {
+    min-height: 40px;
+    padding: 8px;
+    border: 1px dashed #dee2e6;
+    border-radius: 6px;
+    background-color: #f8f9fa;
+}
+
+/* Tabela de obras */
+#tabelaObras {
+    font-size: 0.9rem;
+}
+
+#tabelaObras td {
+    vertical-align: middle;
+}
+
+#tabelaObras .btn-sm {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+}
+
+/* Melhorias para input groups */
+.input-group .btn {
+    border-radius: 0 8px 8px 0;
+}
+
+.input-group .form-control,
+.input-group .form-select {
+    border-radius: 8px 0 0 8px;
+}
+
+/* Estilos para checkboxes de seleção */
+#servicosCheckboxes,
+#locaisCheckboxes {
+    background-color: #f8f9fa;
+}
+
+#servicosCheckboxes .form-check,
+#locaisCheckboxes .form-check {
+    padding: 4px 8px;
+    margin-bottom: 2px;
+}
+
+#servicosCheckboxes .form-check:hover,
+#locaisCheckboxes .form-check:hover {
+    background-color: #e9ecef;
+    border-radius: 4px;
+}
+
+#servicosCheckboxes .form-check-input,
+#locaisCheckboxes .form-check-input {
+    margin-top: 0.25rem;
+}
+
+#servicosCheckboxes .form-check-label,
+#locaisCheckboxes .form-check-label {
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Estilos para caixinhas de seleção */
+.selection-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 60px;
+    padding: 15px;
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.selection-box {
+    position: relative;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    user-select: none;
+}
+
+.selection-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.selection-box.selected {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3);
+}
+
+.selection-box .edit-btn,
+.selection-box .delete-btn {
+    position: absolute;
+    top: -8px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    font-size: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.selection-box .edit-btn {
+    right: 25px;
+    background: #ffc107;
+    color: #000;
+}
+
+.selection-box .delete-btn {
+    right: -8px;
+    background: #dc3545;
+    color: white;
+}
+
+.selection-box .edit-btn:hover,
+.selection-box .delete-btn:hover {
+    transform: scale(1.2);
+}
+
+.selection-boxes:empty::before {
+    content: "Nenhum item selecionado. Clique em 'Adicionar' para incluir novos itens.";
+    color: #6c757d;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+}
+
+/* ===== NOVO LAYOUT - CAIXINHAS DE SELEÇÃO ===== */
+.selection-boxes {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    min-height: 60px !important;
+    padding: 15px !important;
+    border: 2px dashed #dee2e6 !important;
+    border-radius: 8px !important;
+    background-color: #f8f9fa !important;
+}
+
+.selection-box {
+    position: relative !important;
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+    color: white !important;
+    padding: 12px 16px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+    user-select: none !important;
+}
+
+.selection-box:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+}
+
+.selection-box.selected {
+    background: linear-gradient(135deg, #28a745, #20c997) !important;
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.3) !important;
+}
+
+.selection-box .edit-btn,
+.selection-box .delete-btn {
+    position: absolute !important;
+    top: -8px !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+    border: none !important;
+    font-size: 10px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+}
+
+.selection-box .edit-btn {
+    right: 25px !important;
+    background: #ffc107 !important;
+    color: #000 !important;
+}
+
+.selection-box .delete-btn {
+    right: -8px !important;
+    background: #dc3545 !important;
+    color: white !important;
+}
+
+.selection-box .edit-btn:hover,
+.selection-box .delete-btn:hover {
+    transform: scale(1.2) !important;
+}
+
+.selection-boxes:empty::before {
+    content: "Nenhum item selecionado. Clique em 'Adicionar' para incluir novos itens." !important;
+    color: #6c757d !important;
+    font-style: italic !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 30px !important;
+}
+
+/* Responsividade para a nova estrutura */
+@media (max-width: 768px) {
+    .d-flex.justify-content-between {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .input-group {
+        width: 100% !important;
+    }
+    
+    .selection-box {
+        font-size: 0.9rem !important;
+        padding: 10px 14px !important;
+    }
+    
+    .table-responsive {
+        border-radius: 8px;
+    }
+}
+
+/* ESTILOS PARA OCORRÊNCIAS/TRANSPORTES */
+.status-em-andamento {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.status-concluido {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.motivo-preventiva {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+.motivo-corretiva {
+    background-color: #fff3e0;
+    border-left: 4px solid #ff9800;
+}
+
+.motivo-quebra {
+    background-color: #ffebee;
+    border-left: 4px solid #f44336;
+}
+
+.motivo-abastecimento {
+    background-color: #f3e5f5;
+    border-left: 4px solid #9c27b0;
+}
+
+/* ESTILOS PARA CLIMA TEMPO */
+.calendario-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+    font-size: 12px;
+}
+
+.calendario-dia {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calendario-dia:hover {
+    background-color: #f8f9fa;
+}
+
+.clima-fraca {
+    background-color: #28a745 !important;
+    color: white !important;
+}
+
+.clima-moderada {
+    background-color: #007bff !important;
+    color: white !important;
+}
+
+.clima-forte {
+    background-color: #dc3545 !important;
+    color: white !important;
+}
+
+.legenda-clima {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.legenda-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+}
+
+.legenda-cor {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+}
+
+/* BADGES PARA TIPOS DE CHUVA */
+.badge-chuva-fraca {
+    background-color: #28a745;
+}
+
+.badge-chuva-moderada {
+    background-color: #007bff;
+}
+
+.badge-chuva-forte {
+    background-color: #dc3545;
+}
+
+/* FORMULÁRIOS ESPECÍFICOS */
+.form-ocorrencia .form-label,
+.form-clima .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.form-ocorrencia .form-control,
+.form-clima .form-control,
+.form-ocorrencia .form-select,
+.form-clima .form-select {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-ocorrencia .form-control:focus,
+.form-clima .form-control:focus,
+.form-ocorrencia .form-select:focus,
+.form-clima .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* TEMPO TOTAL CALCULADO */
+.tempo-total {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-weight: 500;
+    color: #495057;
+}
+
+/* INDICADORES VISUAIS */
+.indicador-preventiva {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.indicador-corretiva {
+    background-color: #fff3cd;
+    border: 1px solid #ffeaa7;
+    color: #856404;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* ESTILOS PARA DASHBOARD */
+#chartHorasImprodutivas {
+    max-height: 300px;
+}
+
+.dashboard-kpi {
+    text-align: center;
+    padding: 15px;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+    border: 1px solid #dee2e6;
+}
+
+.dashboard-kpi h5 {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.dashboard-kpi small {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+#tabelaParalizacoes {
+    font-size: 0.9rem;
+}
+
+#tabelaParalizacoes td {
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+
+#tabelaParalizacoes .badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+}
+
+/* Coluna de observações com largura expandida */
+#tabelaParalizacoes td:nth-child(4) {
+    max-width: 250px;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+/* RESPONSIVIDADE PARA NOVAS PÁGINAS */
+@media (max-width: 768px) {
+    .calendario-grid {
+        font-size: 10px;
+    }
+    
+    .legenda-clima {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .form-ocorrencia .row,
+    .form-clima .row {
+        margin-bottom: 10px;
+    }
+    
+    .btn-navegacao-mes {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+    
+    #chartHorasImprodutivas {
+        max-height: 250px;
+    }
+    
+    .dashboard-kpi {
+        margin-bottom: 10px;
+    }
+    
+    #tabelaParalizacoes {
+        font-size: 0.8rem;
+    }
+    
+    #tabelaParalizacoes td {
+        padding: 8px 4px;
+    }
+}

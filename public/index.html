@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APONTADOR - Sistema de Viagens</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="style.css?v=20241221001" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Forçar limpeza de cache e reload
+        if (performance.navigation.type !== 1) {
+            localStorage.setItem('force_reload', 'true');
+            location.reload(true);
+        } else if (localStorage.getItem('force_reload')) {
+            localStorage.removeItem('force_reload');
+        }
+        
+        // Verificar se o novo layout foi carregado
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const selectionBoxes = document.querySelector('.selection-boxes');
+                if (!selectionBoxes) {
+                    console.log('Layout antigo detectado, forçando reload...');
+                    location.reload(true);
+                }
+            }, 500);
+        });
+    </script>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Last-Modified" content="0">
+    <meta http-equiv="If-Modified-Since" content="0">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="fas fa-truck"></i> APONTADOR</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" id="nav-dashboard">
+                        <a class="nav-link" href="#" onclick="showSection('dashboard')">Dashboard</a>
+                    </li>
+                    <li class="nav-item" id="nav-viagens">
+                        <a class="nav-link" href="#" onclick="showSection('viagens')">Registrar Viagem</a>
+                    </li>
+                    <li class="nav-item" id="nav-obras">
+                        <a class="nav-link" href="#" onclick="showSection('obras')">Obras</a>
+                    </li>
+                    <li class="nav-item" id="nav-veiculos">
+                        <a class="nav-link" href="#" onclick="showSection('veiculos')">Veículos</a>
+                    </li>
+                    <li class="nav-item" id="nav-profissionais">
+                        <a class="nav-link" href="#" onclick="showSection('profissionais')">Profissionais</a>
+                    </li>
+                    <li class="nav-item" id="nav-diarias">
+                        <a class="nav-link" href="#" onclick="showSection('diarias')">Diárias</a>
+                    </li>
+                    <li class="nav-item" id="nav-ocorrencias">
+                        <a class="nav-link" href="#" onclick="showSection('ocorrencias')">Ocorrências/Transportes</a>
+                    </li>
+                    <li class="nav-item" id="nav-clima">
+                        <a class="nav-link" href="#" onclick="showSection('clima')">Clima Tempo</a>
+                    </li>
+                    <li class="nav-item" id="nav-painel">
+                        <a class="nav-link" href="#" onclick="showSection('painel')">Painel de Controle</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-user"></i> <span id="userName"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <!-- Seção Dashboard -->
+        <div id="dashboard-section" class="section">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-tachometer-alt"></i> Dashboard</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <div class="card bg-primary text-white">
+                                        <div class="card-body">
+                                            <h4 id="totalObras">0</h4>
+                                            <p>Obras Cadastradas</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body">
+                                            <h4 id="totalVeiculos">0</h4>
+                                            <p>Veículos Cadastrados</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body">
+                                            <h4 id="totalViagens">0</h4>
+                                            <p>Total de Viagens</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body">
+                                            <h4 id="totalProfissionais">0</h4>
+                                            <p>Profissionais</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gráfico Horas Improdutivas do Veículo -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6><i class="fas fa-chart-pie"></i> Horas Improdutivas do Veículo</h6>
+                        </div>
+                        <div class="card-body">
+                            <div style="position: relative; height: 300px;">
+                                <canvas id="chartHorasImprodutivas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6><i class="fas fa-info-circle"></i> Resumo Operacional</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <div class="col-6 mb-2">
+                                    <div class="border rounded p-2">
+                                        <h5 id="totalHorasImprodutivas" class="text-danger">0h</h5>
+                                        <small>Horas Improdutivas</small>
+                                    </div>
+                                </div>
+                                <div class="col-6 mb-2">
+                                    <div class="border rounded p-2">
+                                        <h5 id="veiculosParalizados" class="text-warning">0</h5>
+                                        <small>Veículos Paralizados</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tabela Detalhamento de Paralizações -->
+            <div class="row mt-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6><i class="fas fa-table"></i> Detalhamento de Paralizações</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>VEÍCULO</th>
+                                            <th>MOTIVO</th>
+                                            <th>TIPO MANUTENÇÃO</th>
+                                            <th style="width: 30%;">OBSERVAÇÕES</th>
+                                            <th>TOTAL HORAS</th>
+                                            <th>STATUS</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelaParalizacoes">
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted">Carregando dados...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Registrar Viagem -->
+        <div id="viagens-section" class="section">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-plus-circle"></i> Registrar Nova Viagem</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="viagemForm">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">OBRA</label>
+                                        <select class="form-select" id="obraSelect" required onchange="carregarServicosLocais()">
+                                            <option value="">Selecione uma obra</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">SERVIÇO</label>
+                                        <select class="form-select" id="servicoSelect" required>
+                                            <option value="">Selecione um serviço</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">LOCAL</label>
+                                        <select class="form-select" id="localSelect" required>
+                                            <option value="">Selecione um local</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">VEÍCULO</label>
+                                        <select class="form-select" id="veiculoSelect" required>
+                                            <option value="">Selecione um veículo</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">DATA</label>
+                                        <input type="date" class="form-control" id="dataViagem" required>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">QUANTIDADE DE VIAGENS</label>
+                                        <input type="number" class="form-control" id="quantidadeViagens" min="1" required>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg w-100">
+                                    <i class="fas fa-save"></i> SALVAR VIAGEM
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Viagens Recentes</h6>
+                        </div>
+                        <div class="card-body" id="viagensRecentes">
+                            <!-- Viagens recentes serão carregadas aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Obras - NOVO LAYOUT -->
+        <div id="obras-section" class="section" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-building"></i> Cadastrar Obra</h5>
+                </div>
+                <div class="card-body">
+                    <form id="obraForm">
+                        <!-- Nome da Obra -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">NOME DA OBRA</label>
+                            <input type="text" class="form-control form-control-lg" id="nomeObra" placeholder="Digite o nome da obra" required>
+                        </div>
+                        
+                        <!-- Seção Serviços -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="form-label fw-bold mb-0">SERVIÇOS</label>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="novoServico" placeholder="Adicionar novo serviço">
+                                    <button type="button" class="btn btn-success" onclick="adicionarNovoServico()">
+                                        <i class="fas fa-plus"></i> Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="servicosBoxes" class="selection-boxes"></div>
+                        </div>
+                        
+                        <!-- Seção Locais -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="form-label fw-bold mb-0">LOCAIS</label>
+                                <div class="input-group" style="width: 300px;">
+                                    <input type="text" class="form-control" id="novoLocal" placeholder="Adicionar novo local">
+                                    <button type="button" class="btn btn-success" onclick="adicionarNovoLocal()">
+                                        <i class="fas fa-plus"></i> Adicionar
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="locaisBoxes" class="selection-boxes"></div>
+                        </div>
+                        
+                        <!-- Botão Salvar -->
+                        <div class="text-center mb-4">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">
+                                <i class="fas fa-save"></i> SALVAR OBRA
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Lista de Obras Cadastradas -->
+                    <div class="mt-5">
+                        <h6 class="fw-bold mb-3">OBRAS CADASTRADAS</h6>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>OBRA</th>
+                                        <th>SERVIÇOS</th>
+                                        <th>LOCAIS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="listaObrasTabela">
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">Nenhuma obra cadastrada</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Veículos -->
+        <div id="veiculos-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-truck"></i> Cadastrar Veículo</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="veiculoForm">
+                                <div class="mb-3">
+                                    <label class="form-label">VEÍCULO</label>
+                                    <input type="text" class="form-control" id="nomeVeiculo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">PLACA</label>
+                                    <input type="text" class="form-control" id="placaVeiculo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">CUBAGEM (m³)</label>
+                                    <input type="number" step="0.01" class="form-control" id="cubagemVeiculo" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">MOTORISTA</label>
+                                    <input type="text" class="form-control" id="motoristaVeiculo" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-save"></i> Salvar Veículo
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Veículos Cadastrados</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="listaVeiculos"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Profissionais -->
+        <div id="profissionais-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-user"></i> Cadastrar Profissional</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="profissionalForm">
+                                <div class="mb-3">
+                                    <label class="form-label">NOME</label>
+                                    <input type="text" class="form-control" id="nomeProfissional" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">FUNÇÃO</label>
+                                    <input type="text" class="form-control" id="funcaoProfissional" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">TELEFONE</label>
+                                    <input type="tel" class="form-control" id="telefoneProfissional">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">EMAIL</label>
+                                    <input type="email" class="form-control" id="emailProfissional">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">
+                                    <i class="fas fa-save"></i> Salvar Profissional
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Profissionais Cadastrados</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="listaProfissionais"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Diárias -->
+        <div id="diarias-section" class="section" style="display: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5><i class="fas fa-chart-bar"></i> Relatório de Diárias</h5>
+                    <button class="btn btn-success" onclick="exportarExcel()">
+                        <i class="fas fa-file-excel"></i> Exportar Excel
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped" id="tabelaDiarias">
+                            <thead>
+                                <tr>
+                                    <th>Veículo</th>
+                                    <th>Placa</th>
+                                    <th>Motorista</th>
+                                    <th>Cubagem (m³)</th>
+                                    <th>Total Viagens</th>
+                                    <th>Volume Total (m³)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="corpoTabelaDiarias">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Ocorrências/Transportes -->
+        <div id="ocorrencias-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-tools"></i> Registrar Ocorrência/Transporte</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="ocorrenciaForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">OBRA/LOCAL</label>
+                                        <select class="form-select" id="obraLocalSelect" required>
+                                            <option value="">Selecione obra/local</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">VEÍCULO</label>
+                                        <select class="form-select" id="veiculoOcorrenciaSelect" required>
+                                            <option value="">Selecione um veículo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">MOTIVO PARALIZAÇÃO</label>
+                                        <select class="form-select" id="motivoParalizacao" required onchange="togglePreventiva()">
+                                            <option value="">Selecione o motivo</option>
+                                            <option value="manutenção preventiva">Manutenção Preventiva</option>
+                                            <option value="corretiva">Corretiva</option>
+                                            <option value="quebra">Quebra</option>
+                                            <option value="abastecimento">Abastecimento</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">TIPO MANUTENÇÃO</label>
+                                        <select class="form-select" id="tipoManutencao">
+                                            <option value="">Selecione o tipo</option>
+                                            <option value="mecânica">Mecânica</option>
+                                            <option value="elétrica">Elétrica</option>
+                                            <option value="hidráulica">Hidráulica</option>
+                                            <option value="pneus">Pneus</option>
+                                            <option value="outros">Outros</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">DESCRIÇÃO MANUTENÇÃO</label>
+                                    <textarea class="form-control" id="descricaoManutencao" rows="3"></textarea>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">DATA/HORA INÍCIO</label>
+                                        <input type="datetime-local" class="form-control" id="dataHoraInicio" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">DATA/HORA RETORNO</label>
+                                        <input type="datetime-local" class="form-control" id="dataHoraRetorno">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">STATUS</label>
+                                        <select class="form-select" id="statusOcorrencia">
+                                            <option value="em andamento">Em Andamento</option>
+                                            <option value="concluído">Concluído</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-check mt-4">
+                                            <input class="form-check-input" type="checkbox" id="indicadorPreventiva">
+                                            <label class="form-check-label" for="indicadorPreventiva">
+                                                Manutenção Preventiva
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">OBSERVAÇÕES</label>
+                                    <textarea class="form-control" id="observacoesOcorrencia" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg w-100">
+                                    <i class="fas fa-save"></i> SALVAR OCORRÊNCIA
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Ocorrências Recentes</h6>
+                        </div>
+                        <div class="card-body" id="ocorrenciasRecentes">
+                            <!-- Ocorrências recentes serão carregadas aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Clima Tempo -->
+        <div id="clima-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-cloud-rain"></i> Registrar Clima/Tempo</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="climaForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">DATA OCORRÊNCIA</label>
+                                        <input type="date" class="form-control" id="dataOcorrencia" required>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">OBRA/LOCAL</label>
+                                        <select class="form-select" id="obraLocalClimaSelect" required>
+                                            <option value="">Selecione obra/local</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">TIPO CHUVA</label>
+                                        <select class="form-select" id="tipoChuva" required>
+                                            <option value="">Selecione o tipo</option>
+                                            <option value="fraca" style="color: green;">Fraca (Verde)</option>
+                                            <option value="moderada" style="color: blue;">Moderada (Azul)</option>
+                                            <option value="forte" style="color: red;">Forte (Vermelha)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">HORA INÍCIO</label>
+                                        <input type="time" class="form-control" id="horaInicio" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">HORA FIM</label>
+                                        <input type="time" class="form-control" id="horaFim">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">OBSERVAÇÕES</label>
+                                    <textarea class="form-control" id="observacoesClima" rows="3"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg w-100">
+                                    <i class="fas fa-save"></i> SALVAR CLIMA
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6>Calendário Climático</h6>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary" onclick="navegarMes(-1)">«</button>
+                                <span id="mesAnoAtual"></span>
+                                <button class="btn btn-sm btn-outline-primary" onclick="navegarMes(1)">»</button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div id="calendarioClima"></div>
+                            <div class="mt-3">
+                                <small>
+                                    <span class="badge bg-success">Fraca</span>
+                                    <span class="badge bg-primary">Moderada</span>
+                                    <span class="badge bg-danger">Forte</span>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção Painel de Controle -->
+        <div id="painel-section" class="section" style="display: none;">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5><i class="fas fa-cogs"></i> Painel de Controle - Permissões</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <label class="form-label">Selecionar Profissional</label>
+                                <select class="form-select" id="profissionalPermissao" onchange="carregarPermissoes()">
+                                    <option value="">Selecione um profissional</option>
+                                </select>
+                            </div>
+                            
+                            <div id="permissoesContainer" style="display: none;">
+                                <h6>Permissões de Acesso:</h6>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_adm">
+                                            <label class="form-check-label" for="perm_adm">
+                                                <strong>ADM</strong> (Criar e trocar senhas)
+                                            </label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_dashboard">
+                                            <label class="form-check-label" for="perm_dashboard">Dashboard</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_registrar_viagem">
+                                            <label class="form-check-label" for="perm_registrar_viagem">Registrar Viagem</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_obras">
+                                            <label class="form-check-label" for="perm_obras">Obras</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_veiculo">
+                                            <label class="form-check-label" for="perm_veiculo">Veículo</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_profissionais">
+                                            <label class="form-check-label" for="perm_profissionais">Profissionais</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_diaria">
+                                            <label class="form-check-label" for="perm_diaria">Diária</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_painel_controle">
+                                            <label class="form-check-label" for="perm_painel_controle">Painel de Controle</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_visualizar_ocorrencias_transportes">
+                                            <label class="form-check-label" for="perm_visualizar_ocorrencias_transportes">Ocorrências/Transportes</label>
+                                        </div>
+                                        <div class="form-check mb-2">
+                                            <input class="form-check-input" type="checkbox" id="perm_visualizar_clima_tempo">
+                                            <label class="form-check-label" for="perm_visualizar_clima_tempo">Clima Tempo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h6>Criar Usuário e Senha:</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Usuário</label>
+                                            <input type="text" class="form-control" id="novoUsuario" placeholder="Nome de usuário">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">Senha</label>
+                                            <input type="password" class="form-control" id="novaSenha" placeholder="Senha">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <button type="button" class="btn btn-success mt-3" onclick="salvarPermissoes()">
+                                    <i class="fas fa-save"></i> Salvar Permissões
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h6>Usuários Cadastrados</h6>
+                        </div>
+                        <div class="card-body">
+                            <div id="listaUsuarios"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="init.js"></script>
+    <script src="app.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+Crie um aplicativo web chamado **APONTADOR**.  
+
+O app deve permitir que o usuário registre e gerencie informações de obras, serviços, locais, veículos e viagens.  
+
+### Funcionalidades principais:
+1. **Formulário de Registro de Viagens**
+   - Campos:
+     - OBRA [texto]
+     - SERVIÇO [texto]
+     - LOCAL [texto]
+     - DATA [data]
+     - VEÍCULO [texto]
+     - VIAGEM [número inteiro]
+   - Botão **SALVAR** para armazenar os dados.
+   - Os dados devem poder ser cadastrados previamente, editados ou criados no momento do registro.
+
+2. **Cadastros necessários**
+   - **Cadastro de Obras**: OBRA, SERVIÇO, LOCAL
+   - **Cadastro de Veículos**: VEÍCULO, PLACA, CUBAGEM (m³), MOTORISTA
+   - **Tabela das Diárias**:
+     - Mostrar o **TOTAL DE VIAGENS** por veículo
+     - Mostrar o **VOLUME TOTAL** (somatório da cubagem × viagens)
+     - Exibir **subtotal das diárias por veículo**
+
+3. **Gestão de dados**
+   - Os registros devem ser feitos **in loco** (offline ou local).
+   - Posteriormente, permitir **upload para banco de dados em nuvem**.
+   - Possibilidade de **exportar dados em planilha Excel e CSV**.
+
+### Requisitos técnicos:
+- Interface simples e responsiva (HTML, CSS, JavaScript ou framework web moderno).
+- Backend com suporte a CRUD (Create, Read, Update, Delete).
+- Banco de dados relacional (SQLite, PostgreSQL ou outro).
+- Função de exportação para Excel/CSV.
+- Estrutura modular para facilitar manutenção.
+
+O objetivo é criar um sistema prático de apontamento de viagens e serviços, com relatórios claros e exportáveis.
+📊 Estrutura do Banco de Dados
+1. Tabela: Obras
+id_obra (PK, inteiro, auto incremento)
+
+nome_obra (texto)
+
+servico (texto)
+
+local (texto)
+
+2. Tabela: Veículos
+id_veiculo (PK, inteiro, auto incremento)
+
+veiculo (texto)
+
+placa (texto único)
+
+cubagem_m3 (decimal)
+
+motorista (texto)
+
+3. Tabela: Viagens
+id_viagem (PK, inteiro, auto incremento)
+
+id_obra (FK → Obras.id_obra)
+
+id_veiculo (FK → Veículos.id_veiculo)
+
+data (date)
+
+quantidade_viagens (inteiro)
+
+⚡ Aqui cada registro representa uma diária de viagens para um veículo em uma obra.
+
+4. Tabela: Diárias
+id_diaria (PK, inteiro, auto incremento)
+
+id_veiculo (FK → Veículos.id_veiculo)
+
+data (date)
+
+total_viagens (inteiro, calculado)
+
+volume_total (decimal, calculado: cubagem_m3 × total_viagens)
+
+🔗 Relacionamentos
+Relacionamento	Descrição
+Obras → Viagens	Uma obra pode ter várias viagens registradas
+Veículos → Viagens	Um veículo pode realizar várias viagens
+Veículos → Diárias	Cada veículo gera uma diária com total de viagens e volume
+📤 Exportação
+Função para exportar Excel e CSV:
+
+Exportar tabela Viagens com todos os campos.
+
+Exportar tabela Diárias com totais por veículo.
+
+🖥️ Fluxo do App
+Usuário cadastra Obras e Veículos.
+
+Usuário registra Viagens (com botão SALVAR).
+
+Sistema calcula Diárias automaticamente.
+
+Usuário pode editar cadastros ou criar novos no momento do registro.
+
+Dados podem ser exportados ou enviados para nuvem.
+
+🔧 Requisitos para uso em celulares
+Design responsivo
+
+Usar frameworks como Bootstrap, Tailwind ou Material UI para que os formulários e tabelas se ajustem automaticamente a telas menores.
+
+Campos grandes e botões bem espaçados para facilitar o toque.
+
+Interface simplificada
+
+Menos texto por tela, foco em inputs rápidos.
+
+Botão SALVAR sempre visível e destacado.
+
+Navegação por menu hambúrguer ou abas inferiores.
+
+Funcionalidade offline
+
+Permitir que os dados sejam registrados in loco, mesmo sem internet.
+
+Sincronização automática com o banco de dados em nuvem quando a conexão voltar.
+
+Exportação e uploads
+
+Opção de exportar para Excel/CSV também no celular.
+
+Upload simples para a nuvem com feedback visual (barra de progresso).
+
+Integração com recursos do celular
+
+Uso do teclado numérico para o campo VIAGEM (número inteiro).
+
+Seleção de data com calendário nativo do celular.
+
+Possibilidade futura de capturar localização GPS para registrar o LOCAL automaticamente.
+
+📱 Tecnologias recomendadas
+Frontend: React + React Native Web (ou apenas React com responsividade).
+
+Backend: Node.js + Express + banco relacional (PostgreSQL ou SQLite).
+
+Offline-first: IndexedDB ou localStorage para armazenar dados temporários.
+
+Exportação: bibliotecas como xlsx ou papaparse para gerar Excel/CSV.
+
+https://a8153e62-0d75-435a-b0bc-271692880b19-00-tte8c9qh9hds.janeway.replit.dev/

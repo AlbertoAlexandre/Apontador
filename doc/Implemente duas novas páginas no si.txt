@@ -1,0 +1,109 @@
+Implemente duas novas páginas no sistema APONTADOR com base nas especificações abaixo. Preserve todas as funcionalidades estáveis e intervenha apenas nos pontos necessários, garantindo integridade e eficiência do sistema.
+
+1️⃣ Página: Ocorrências/Transportes
+Campos a serem criados:
+obra_local_id → vinculado à tabela obra_locais
+veiculo_id → vinculado à tabela veículos
+motivo_paralizacao → enum: manutenção preventiva, corretiva, quebra, abastecimento
+tipo_manutencao → enum: mecânica, elétrica, hidráulica, pneus, outros
+descricao_manutencao → texto livre
+data_hora_inicio → datetime
+data_hora_retorno → datetime
+tempo_total → calculado automaticamente: data_hora_retorno - data_hora_inicio
+observacoes → texto livre
+usuario_id → vinculado à tabela usuarios
+foto_anexo → upload opcional
+status → enum: em andamento, concluído
+indicador_preventiva → boolean (true = preventiva, false = corretiva)
+
+Nova tabela sugerida:
+ocorrencias_transportes
+
+sql
+id (PK)
+obra_local_id (FK)
+veiculo_id (FK)
+motivo_paralizacao
+tipo_manutencao
+descricao_manutencao
+data_hora_inicio
+data_hora_retorno
+tempo_total
+observacoes
+usuario_id (FK)
+foto_anexo
+status
+indicador_preventiva
+created_at
+updated_at
+
+Permissões:
+Criar box de controle no painel de permissões:
+Ocorrências/Transportes (visualizar_ocorrencias_transportes)
+
+
+2️⃣ Página: Clima Tempo
+Campos a serem criados:
+data_ocorrencia → date
+obra_local_id → vinculado à tabela obra_locais
+tipo_chuva → enum: fraca (verde), moderada (azul), forte (vermelha)
+hora_inicio → time
+hora_fim → time
+tempo_total → calculado automaticamente: hora_fim - hora_inicio
+observacoes → texto livre
+usuario_id → vinculado à tabela usuarios
+
+Nova tabela sugerida:
+Clima_Tempo
+
+sql
+id (PK)
+data_ocorrencia
+obra_local_id (FK)
+tipo_chuva
+hora_inicio
+hora_fim
+tempo_total
+observacoes
+usuario_id (FK)
+created_at
+updated_at
+
+Funcionalidades adicionais:
+Calendário colorido por tipo de chuva
+Totais mensais por tipo
+Botões de navegação entre meses
+Exportação Excel/PDF
+
+Permissões:
+Criar box de controle no painel de permissões:
+Clima Tempo (visualizar_Clima_Tempo)
+
+📊 Relatórios e Dashboards
+Relatório de Paralizações:
+Tempo total parado por veículo
+
+Agrupamento por obra e tipo de manutenção
+Filtro por período e status
+Relatório de Chuvas:
+Totais mensais por tipo
+Gráficos de barras por intensidade
+Calendário colorido com filtro por obra
+
+Dashboard Integrado:
+Veículos parados x motivo
+Dias de chuva x intensidade
+% de dias parados por manutenção
+% de dias parados por clima
+
+🔗 Integrações com banco de dados existente
+obra_local_id → vinculado à obra_locais
+veiculo_id → vinculado à veiculos
+usuario_id → vinculado à usuarios
+Todas as listas suspensas devem puxar dados diretamente das tabelas existentes para garantir consistência.
+
+✅ Regras de execução
+Execute apenas o necessário.
+Preserve todas as funcionalidades estáveis.
+Intervenha somente nos pontos que exigem correção ou melhoria.
+Garanta que o sistema continue íntegro, estável e eficiente após as ações.

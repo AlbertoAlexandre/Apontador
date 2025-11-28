@@ -1,0 +1,67 @@
+========================================
+    APONTADOR - Sistema de Viagens
+========================================
+
+✅ SISTEMA CRIADO COM SUCESSO!
+
+📋 COMO INICIAR:
+
+1. MÉTODO RÁPIDO (Windows):
+   - Clique duas vezes em: iniciar.bat
+   
+2. MÉTODO MANUAL:
+   - Abra o terminal nesta pasta
+   - Execute: python app_python.py
+   
+3. ACESSE O SISTEMA:
+   - Abra o navegador
+   - Vá para: http://localhost:5000
+
+📱 COMO USAR:
+
+1. CADASTROS INICIAIS:
+   - Clique em "Obras" e cadastre suas obras
+   - Clique em "Veículos" e cadastre seus veículos
+   
+2. REGISTRAR VIAGENS:
+   - Clique em "Registrar Viagem"
+   - Selecione a obra e veículo
+   - Informe data e quantidade de viagens
+   - Clique em "SALVAR VIAGEM"
+   
+3. VER RELATÓRIOS:
+   - Clique em "Diárias"
+   - Veja totais por veículo
+   - Clique em "Exportar Excel" para baixar
+
+📊 FUNCIONALIDADES:
+
+✅ Cadastro de Obras (nome, serviço, local)
+✅ Cadastro de Veículos (veículo, placa, cubagem, motorista)
+✅ Registro de Viagens (obra, veículo, data, quantidade)
+✅ Relatório de Diárias (totais por veículo)
+✅ Exportação Excel (planilhas completas)
+✅ Interface responsiva (funciona no celular)
+
+🔧 ARQUIVOS IMPORTANTES:
+
+- app_python.py = Servidor principal
+- apontador.db = Banco de dados (criado automaticamente)
+- public/ = Interface web (HTML, CSS, JavaScript)
+
+📞 SUPORTE:
+
+- Se der erro, verifique se o Python está instalado
+- Execute: pip install Flask pandas openpyxl
+- O sistema funciona offline (dados locais)
+
+🎯 PRÓXIMOS PASSOS:
+
+1. Use o sistema para registrar suas viagens
+2. Exporte relatórios em Excel
+3. Para produção, considere migrar para PostgreSQL
+4. Para internet, configure um servidor web
+
+========================================
+Status: FUNCIONANDO PERFEITAMENTE! ✅
+========================================

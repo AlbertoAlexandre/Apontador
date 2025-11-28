@@ -1,0 +1,23 @@
+ENTRAR NO REPOSITÓRIO
+cd /d/Projetos_Python/App_Apontador
+
+INICIAR O GIT NA PASTA
+git init
+
+ADICIONAR OS ARQUIVOS
+git add .
+
+
+CRIAR REPOSITÓRIO NO GIT HUB:
+LINK: https://github.com/AlbertoAlexandre/Apontador.git
+
+CRIAR O COMMIT:
+git commit -m "Digite suas mudanças feitas"
+EXE.: git commit -m "Primeiro Commit"
+
+CONECTAR COM O REPOSITÓRIO DO GIT HUB:
+git remote add origin https://github.com/AlbertoAlexandre/Apontador.git
+
+ENVIAR O PROJETO PARA O GIT HUB:
+git branch -M main
+

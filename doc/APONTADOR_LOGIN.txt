@@ -1,0 +1,45 @@
+O aplicativo já está funcionando perfeitamente e não deve ser alterado em sua estrutura atual. 
+Agora, quero adicionar novas funcionalidades sem desfazer o sistema existente:
+
+### 1. Página de Login (Página Principal) exemplo de layout: D:\Projetos_Python\App_Apontador\img\Login.png
+- Ao abrir o app, o usuário deve ser direcionado para a página de **Login**.
+- Após login bem-sucedido, o usuário será redirecionado automaticamente para o **Dashboard atual**.
+- Torne o usuário Alberto Alexandre - Administrador que já está cadastrado em Proficionais um administrador do sistema:
+  - Usuário: adm
+  - Senha: 123
+  - Permissões: todas habilitadas (acesso total).
+
+### 2. Página de Painel de Controle
+- Esta página será responsável por:
+  - Configuração de permissões de acesso para cada profissional.
+  - Criação de **usuário e senha** para cada profissional cadastrado na página de Profissionais.
+- Funcionalidades:
+  - Campo de seleção de profissional (lista suspensa).
+  - Ao selecionar um profissional, as caixas de permissões devem ser atualizadas conforme as permissões já atribuídas.
+  - Permitir que o administrador altere permissões e clique em **Salvar** para registrar as mudanças.
+
+### 3. Permissões de Acesso
+- Tipos de permissões:
+  - **ADM** (criar e trocar senhas).
+  - Acesso às páginas:
+    - Dashboard
+    - Registrar Viagem
+    - Obras
+    - Veículo
+    - Profissionais
+    - Diária
+    - Painel de Controle
+- Cada permissão deve ser representada por uma **caixa de marcação (checkbox)**.
+- Padrão: todas as caixas desmarcadas para novos profissionais cadastrados.
+- Caso uma permissão não seja concedida:
+  - O profissional não poderá acessar a página correspondente.
+  - A página não deve aparecer na barra lateral (ficando oculta).
+
+### 4. Regras Gerais
+- O sistema atual deve permanecer intacto e funcional.
+- As novas páginas devem ser integradas sem comprometer o fluxo existente.
+- O design deve ser simples, funcional e permitir futuras expansões.
+- O administrador (usuário adm) sempre terá acesso total e poderá gerenciar permissões de todos os profissionais.
+
+### Objetivo
+Criar um sistema de login e controle de permissões sofisticado, funcional e seguro, mantendo o app atual em perfeito funcionamento.
