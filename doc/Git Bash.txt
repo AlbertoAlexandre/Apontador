@@ -1,3 +1,13 @@
+cd /d/Projetos_Python/App_Apontador
+git init
+git remote add origin https://github.com/AlbertoAlexandre/Apontador.git
+git add .
+git commit -m "Primeiro commit do projeto Apontador"
+git branch -M main
+git push -u origin main
+
+
+
 ENTRAR NO REPOSITÓRIO
 cd /d/Projetos_Python/App_Apontador
 
@@ -21,3 +31,4 @@ git remote add origin https://github.com/AlbertoAlexandre/Apontador.git
 ENVIAR O PROJETO PARA O GIT HUB:
 git branch -M main
 
+git push -u origin main
